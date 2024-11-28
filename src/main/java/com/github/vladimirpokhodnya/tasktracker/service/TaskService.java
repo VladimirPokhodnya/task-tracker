@@ -1,40 +1,18 @@
 package com.github.vladimirpokhodnya.tasktracker.service;
 
 import com.github.vladimirpokhodnya.tasktracker.model.Task;
-import com.github.vladimirpokhodnya.tasktracker.repository.TaskRepository;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-@Service
-public class TaskService {
+public interface TaskService {
 
-    final private TaskRepository taskRepository;
+    Task createTask(Task task);
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    Task getTaskById(Long id);
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-    }
+    Task updateTask(Long id, Task updatedTask);
 
-    public Task getTaskById(Long id) {
-        return taskRepository.findById(id).orElse(null);
-    }
+    void deleteTask(Long id);
 
-    public Task updateTask(Long id, Task updatedTask) {
-        if (!taskRepository.existsById(id)) {
-            return null;
-        }
-        updatedTask.setId(id);
-        return taskRepository.save(updatedTask);
-    }
-
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
-    }
-
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
-    }
+    List<Task> getAllTasks();
 }
