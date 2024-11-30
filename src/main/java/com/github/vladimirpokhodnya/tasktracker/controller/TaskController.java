@@ -1,5 +1,6 @@
 package com.github.vladimirpokhodnya.tasktracker.controller;
 
+import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.HandlingResult;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LoggingException;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LoggingExecution;
 import com.github.vladimirpokhodnya.tasktracker.model.Task;
@@ -57,6 +58,7 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @HandlingResult
     @LoggingExecution
     @GetMapping
     public List<Task> getAllTasks() {

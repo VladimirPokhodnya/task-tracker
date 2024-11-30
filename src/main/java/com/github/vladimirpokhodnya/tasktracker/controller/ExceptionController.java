@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExceptionController {
 
     @LoggingExecution
-    @LoggingException
     @GetMapping("/exception")
     public String triggerException() {
         throw new RuntimeException("This is a test exception");
