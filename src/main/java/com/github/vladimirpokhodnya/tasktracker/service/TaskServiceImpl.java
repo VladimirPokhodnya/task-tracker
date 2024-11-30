@@ -38,6 +38,7 @@ public class TaskServiceImpl implements TaskService{
         Task updatedTask = taskRepository.save(task);
         return mapToDTO(updatedTask);
     }
+
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
