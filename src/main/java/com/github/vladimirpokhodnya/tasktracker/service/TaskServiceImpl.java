@@ -53,6 +53,7 @@ public class TaskServiceImpl implements TaskService{
         taskDTO.setId(task.getId());
         taskDTO.setTitle(task.getTitle());
         taskDTO.setDescription(task.getDescription());
+        taskDTO.setUserId(task.getUserId());
         return taskDTO;
     }
 
@@ -61,6 +62,7 @@ public class TaskServiceImpl implements TaskService{
         task.setId(taskDTO.getId());
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
+        task.setUserId(taskDTO.getUserId());
         return task;
     }
 }

@@ -4,6 +4,7 @@ public class TaskDTO {
     private Long id;
     private String title;
     private String description;
+    private Long userId;
 
     public TaskDTO() {
     }
@@ -32,12 +33,21 @@ public class TaskDTO {
         this.description = description;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "TaskDTO{" +
                "id=" + id +
                ", title='" + title + '\'' +
                ", description='" + description + '\'' +
+               ", userId=" + userId +
                '}';
     }
 }

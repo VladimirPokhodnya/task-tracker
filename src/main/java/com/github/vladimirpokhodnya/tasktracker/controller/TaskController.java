@@ -1,7 +1,8 @@
 package com.github.vladimirpokhodnya.tasktracker.controller;
 
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.HandlingResult;
-import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LoggingExecution;
+import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogExecution;
+import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogTracking;
 import com.github.vladimirpokhodnya.tasktracker.model.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -27,16 +28,18 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @LoggingExecution
+    @LogExecution
     @HandlingResult
+    @LogTracking
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
         TaskDTO createdTask = taskService.createTask(taskDTO);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
-    @LoggingExecution
+    @LogExecution
     @HandlingResult
+    @LogTracking
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
         TaskDTO taskDTO = taskService.getTaskById(id);
@@ -46,8 +49,9 @@ public class TaskController {
         return new ResponseEntity<>(taskDTO, HttpStatus.OK);
     }
 
-    @LoggingExecution
+    @LogExecution
     @HandlingResult
+    @LogTracking
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
         TaskDTO updatedTask = taskService.updateTask(id, taskDTO);
@@ -57,16 +61,18 @@ public class TaskController {
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
-    @LoggingExecution
+    @LogExecution
     @HandlingResult
+    @LogTracking
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @LoggingExecution
+    @LogExecution
     @HandlingResult
+    @LogTracking
     @GetMapping
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
         List<TaskDTO> taskDTOs = taskService.getAllTasks();
