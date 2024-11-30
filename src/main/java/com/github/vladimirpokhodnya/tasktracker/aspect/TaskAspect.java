@@ -1,6 +1,5 @@
 package com.github.vladimirpokhodnya.tasktracker.aspect;
 
-import com.github.vladimirpokhodnya.tasktracker.model.Task;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -9,8 +8,6 @@ import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Aspect
 @Component
@@ -33,7 +30,7 @@ public class TaskAspect {
             pointcut = "@annotation(com.github.vladimirpokhodnya.tasktracker.aspect.annotation.HandlingResult)",
             returning = "result"
     )
-    public void logAfterReturning(JoinPoint joinPoint, List<Task> result) {
+    public void logAfterReturning(JoinPoint joinPoint, Object result) {
         logger.info("Method {} returned value is : {}", joinPoint.getSignature().getName(), result);
     }
 }

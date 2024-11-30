@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExceptionController {
 
+    @LoggingException
     @LoggingExecution
     @GetMapping("/exception")
     public String triggerException() {

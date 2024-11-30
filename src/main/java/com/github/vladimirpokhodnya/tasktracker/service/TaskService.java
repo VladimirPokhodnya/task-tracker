@@ -1,18 +1,18 @@
 package com.github.vladimirpokhodnya.tasktracker.service;
 
-import com.github.vladimirpokhodnya.tasktracker.model.Task;
+import com.github.vladimirpokhodnya.tasktracker.model.TaskDTO;
 
 import java.util.List;
 
 public interface TaskService {
 
-    Task createTask(Task task);
+    TaskDTO createTask(TaskDTO taskDTO);
 
-    Task getTaskById(Long id);
+    TaskDTO getTaskById(Long id);
 
-    Task updateTask(Long id, Task updatedTask);
+    TaskDTO updateTask(Long id, TaskDTO taskDTO);
 
     void deleteTask(Long id);
 
-    List<Task> getAllTasks();
+    List<TaskDTO> getAllTasks();
 }
