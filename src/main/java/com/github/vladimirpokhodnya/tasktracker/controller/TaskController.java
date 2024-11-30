@@ -1,6 +1,7 @@
 package com.github.vladimirpokhodnya.tasktracker.controller;
 
-import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogExecution;
+import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LoggingException;
+import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LoggingExecution;
 import com.github.vladimirpokhodnya.tasktracker.model.Task;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -56,10 +57,10 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
-    @LogExecution
+    @LoggingExecution
     @GetMapping
     public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
+
 }
