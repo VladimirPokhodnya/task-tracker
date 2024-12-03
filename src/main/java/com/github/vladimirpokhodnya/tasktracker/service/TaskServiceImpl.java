@@ -6,10 +6,11 @@ import com.github.vladimirpokhodnya.tasktracker.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     final private TaskRepository taskRepository;
 
@@ -23,21 +24,23 @@ public class TaskServiceImpl implements TaskService{
         return mapToDTO(createdTask);
     }
 
-    public TaskDTO getTaskById(Long id) {
+    public Optional<TaskDTO> getTaskById(Long id) {
         return taskRepository.findById(id)
-                .map(this::mapToDTO)
-                .orElse(null);
+                .map(this::mapToDTO);
     }
 
-    public TaskDTO updateTask(Long id, TaskDTO taskDTO) {
-        if (!taskRepository.existsById(id)) {
-            return null;
-        }
-        Task task = mapToEntity(taskDTO);
-        task.setId(id);
-        Task updatedTask = taskRepository.save(task);
-        return mapToDTO(updatedTask);
+    public Optional<TaskDTO> updateTask(Long id, TaskDTO taskDTO) {
+        return taskRepository.findById(id)
+                .map(task -> {
+                    task.setUserId(id);
+                    task.setTitle(taskDTO.getTitle());
+                    task.setDescription(taskDTO.getDescription());
+                    task.setUserId(taskDTO.getUserId());
+                    // ... обновление других полей
+                    return mapToDTO(taskRepository.save(task));
+                });
     }
+
 
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);

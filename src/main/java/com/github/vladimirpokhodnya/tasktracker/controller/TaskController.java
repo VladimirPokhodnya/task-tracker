@@ -5,8 +5,6 @@ import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogExecution;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogTracking;
 import com.github.vladimirpokhodnya.tasktracker.model.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasks")
@@ -32,50 +31,39 @@ public class TaskController {
     @HandlingResult
     @LogTracking
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
-        TaskDTO createdTask = taskService.createTask(taskDTO);
-        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+    public TaskDTO createTask(@RequestBody TaskDTO taskDTO) {
+        return taskService.createTask(taskDTO);
     }
 
     @LogExecution
     @HandlingResult
     @LogTracking
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
-        TaskDTO taskDTO = taskService.getTaskById(id);
-        if (taskDTO == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+    public Optional<TaskDTO> getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
     @LogExecution
     @HandlingResult
     @LogTracking
     @PutMapping("/{id}")
-    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
-        TaskDTO updatedTask = taskService.updateTask(id, taskDTO);
-        if (updatedTask == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+    public Optional<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
+        return taskService.updateTask(id, taskDTO);
     }
 
     @LogExecution
     @HandlingResult
     @LogTracking
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @LogExecution
     @HandlingResult
     @LogTracking
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> taskDTOs = taskService.getAllTasks();
-        return new ResponseEntity<>(taskDTOs, HttpStatus.OK);
+    public List<TaskDTO> getAllTasks() {
+        return taskService.getAllTasks();
     }
 }
