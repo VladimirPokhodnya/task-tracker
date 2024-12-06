@@ -3,6 +3,7 @@ package com.github.vladimirpokhodnya.tasktracker.controller;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.HandlingResult;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogExecution;
 import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogTracking;
+import com.github.vladimirpokhodnya.tasktracker.kafka.KafkaTaskProducer;
 import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskStatusDTO;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
@@ -24,9 +25,11 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskService taskService;
+    private final KafkaTaskProducer kafkaTaskProducer;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, KafkaTaskProducer kafkaTaskProducer) {
         this.taskService = taskService;
+        this.kafkaTaskProducer = kafkaTaskProducer;
     }
 
     @LogExecution
@@ -74,6 +77,7 @@ public class TaskController {
     @LogTracking
     @PatchMapping("/{id}/status")
     public Optional<TaskDTO> updateTaskStatus(@PathVariable Long id, @RequestBody TaskStatusDTO statusDTO) {
+        kafkaTaskProducer.send(id, statusDTO.status());
         return taskService.updateStatus(id, statusDTO.status());
     }
 
