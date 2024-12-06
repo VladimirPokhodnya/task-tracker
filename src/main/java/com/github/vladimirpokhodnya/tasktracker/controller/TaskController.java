@@ -73,8 +73,8 @@ public class TaskController {
     @HandlingResult
     @LogTracking
     @PatchMapping("/{id}/status")
-    public Optional<TaskDTO> updateTaskStatus(@PathVariable Long id, @RequestBody TaskStatusDTO statusUpdate) {
-        return taskService.updateStatus(id, statusUpdate.getStatus());
+    public Optional<TaskDTO> updateTaskStatus(@PathVariable Long id, @RequestBody TaskStatusDTO statusDTO) {
+        return taskService.updateStatus(id, statusDTO.status());
     }
 
 }
