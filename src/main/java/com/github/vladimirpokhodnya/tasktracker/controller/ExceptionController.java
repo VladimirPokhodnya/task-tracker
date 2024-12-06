@@ -18,4 +18,6 @@ public class ExceptionController {
         throw new RuntimeException("This is a test exception");
     }
 
+
+
 }

@@ -1,7 +1,8 @@
 package com.github.vladimirpokhodnya.tasktracker.service;
 
 import com.github.vladimirpokhodnya.tasktracker.model.Task;
-import com.github.vladimirpokhodnya.tasktracker.model.TaskDTO;
+import com.github.vladimirpokhodnya.tasktracker.model.TaskStatus;
+import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class TaskServiceImpl implements TaskService {
                     task.setTitle(taskDTO.getTitle());
                     task.setDescription(taskDTO.getDescription());
                     task.setUserId(taskDTO.getUserId());
-                    // ... обновление других полей
+                    task.setStatus(taskDTO.getStatus());
                     return mapToDTO(taskRepository.save(task));
                 });
     }
@@ -52,12 +53,22 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<TaskDTO> updateStatus(Long taskId, TaskStatus newStatus) {
+        return taskRepository.findById(taskId)
+                .map(task -> {
+                    task.setStatus(newStatus);
+                    return mapToDTO(taskRepository.save(task));
+                });
+    }
+
+
     private TaskDTO mapToDTO(Task task) {
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setId(task.getId());
         taskDTO.setTitle(task.getTitle());
         taskDTO.setDescription(task.getDescription());
         taskDTO.setUserId(task.getUserId());
+        taskDTO.setStatus(task.getStatus());
         return taskDTO;
     }
 
@@ -67,6 +78,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setUserId(taskDTO.getUserId());
+        task.setStatus(taskDTO.getStatus());
         return task;
     }
 }
