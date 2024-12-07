@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
     private static final Logger logger = LoggerFactory.getLogger(NotificationService.class.getName());
 
+    private final MailSenderService service;
+
+    public NotificationService(MailSenderService service) {
+        this.service = service;
+    }
+
     @KafkaListener(topics = "task-status-updates", groupId = "task-status-updates")
     public void listen(String message) {
         String[] parts = message.split(":");
@@ -22,6 +28,11 @@ public class NotificationService {
 
 
     public void sendNotification(String taskId, String newStatus) {
+        service.send(
+                "pokhodnya-ngs.ru@yandex.ru",
+                "Change of status",
+                "Task ID = " + taskId + " has its status updated to " + newStatus
+        );
 
         logger.info("Notification email sent for Task ID: " + taskId + " with new status: " + newStatus);
     }
