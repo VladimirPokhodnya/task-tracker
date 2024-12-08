@@ -22,7 +22,7 @@ public class MailSenderService {
         mailMessage.setText(body);
         mailMessage.setFrom(from);
 
-        mailSender.send(mailMessage);
+//        mailSender.send(mailMessage);
     }
 
 }
