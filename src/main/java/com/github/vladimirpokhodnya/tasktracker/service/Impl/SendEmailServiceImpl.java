@@ -13,11 +13,11 @@ public class SendEmailServiceImpl implements SendEmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(SendEmailServiceImpl.class.getName());
 
-    @Value("${spring.mail.username}")
-    private String to;
-
     @Value("${email.from-address}")
     private String from;
+
+    @Value("${email.to-default}")
+    private String to;
 
     private final JavaMailSender mailSender;
 
