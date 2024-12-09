@@ -4,9 +4,8 @@ import com.github.vladimirpokhodnya.tasktracker.model.Task;
 import com.github.vladimirpokhodnya.tasktracker.model.TaskStatus;
 import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.repository.TaskRepository;
+import com.github.vladimirpokhodnya.tasktracker.service.KafkaTaskProducerService;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
 
-    @Value("${task.kafka.consumer.group-id}")
-    String groupId;
-
     private final TaskRepository taskRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTaskProducerService kafkaTaskProducerService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, KafkaTemplate<String, String> kafkaTemplate) {
+    public TaskServiceImpl(TaskRepository taskRepository, KafkaTaskProducerService kafkaTaskProducerService) {
         this.taskRepository = taskRepository;
-        this.kafkaTemplate = kafkaTemplate;
+        this.kafkaTaskProducerService = kafkaTaskProducerService;
     }
 
     public TaskDTO createTask(TaskDTO taskDTO) {
@@ -69,10 +65,7 @@ public class TaskServiceImpl implements TaskService {
                     return mapToDTO(taskRepository.save(task));
                 });
 
-        updatedTask.ifPresent(task -> {
-            String message = taskId + ":" + newStatus.name();
-            kafkaTemplate.send(groupId, message);
-        });
+        updatedTask.ifPresent(task -> kafkaTaskProducerService.sent(updatedTask.get()));
 
         return updatedTask;
     }
