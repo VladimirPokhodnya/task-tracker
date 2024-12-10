@@ -1,6 +1,8 @@
 package com.github.vladimirpokhodnya.tasktracker.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +19,7 @@ public class Task {
     private String title;
     private String description;
     private Long userId;
+    private TaskStatus status;
 
     public Task() {
     }
@@ -53,16 +56,25 @@ public class Task {
         this.userId = userId;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(userId, task.userId);
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(userId, task.userId) && status == task.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, userId);
+        return Objects.hash(id, title, description, userId, status);
     }
 }

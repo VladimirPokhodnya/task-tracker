@@ -1,10 +1,13 @@
-package com.github.vladimirpokhodnya.tasktracker.model;
+package com.github.vladimirpokhodnya.tasktracker.model.dto;
+
+import com.github.vladimirpokhodnya.tasktracker.model.TaskStatus;
 
 public class TaskDTO {
     private Long id;
     private String title;
     private String description;
     private Long userId;
+    private TaskStatus status;
 
     public TaskDTO() {
     }
@@ -33,6 +36,14 @@ public class TaskDTO {
         this.description = description;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -48,7 +59,7 @@ public class TaskDTO {
                ", title='" + title + '\'' +
                ", description='" + description + '\'' +
                ", userId=" + userId +
+               ", status=" + status +
                '}';
     }
-
 }
