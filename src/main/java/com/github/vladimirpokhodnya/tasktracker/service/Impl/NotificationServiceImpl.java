@@ -18,8 +18,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public void sendNotification(String taskId, String newStatus) {
-        logger.info("Notification for Task ID: " + taskId + " with new status: " + newStatus);
-        service.sendEmail("Notification for Task ID: " + taskId + " with new status: " + newStatus);
+        String message = "Notification for Task ID: " + taskId + " with new status: " + newStatus;
+        logger.info(message);
+        service.sendEmail(message);
     }
 
 }
