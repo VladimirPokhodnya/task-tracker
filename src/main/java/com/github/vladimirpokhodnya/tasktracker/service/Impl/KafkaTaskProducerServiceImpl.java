@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class KafkaTaskProducerServiceImpl implements KafkaTaskProducerService {
 
     @Value("${task.kafka.consumer.group-id}")
-    String groupId;
+    private String groupId;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
