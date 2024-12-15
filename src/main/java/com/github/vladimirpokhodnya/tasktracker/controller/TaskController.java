@@ -1,8 +1,8 @@
 package com.github.vladimirpokhodnya.tasktracker.controller;
 
-import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.HandlingResult;
-import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogExecution;
-import com.github.vladimirpokhodnya.tasktracker.aspect.annotation.LogTracking;
+import com.github.vladimirpokhodnya.aophttploggingstarter.aspect.old.annotation.HandlingResult;
+import com.github.vladimirpokhodnya.aophttploggingstarter.aspect.old.annotation.LogExecution;
+import com.github.vladimirpokhodnya.aophttploggingstarter.aspect.old.annotation.LogTracking;
 import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskDTO;
 import com.github.vladimirpokhodnya.tasktracker.model.dto.TaskStatusDTO;
 import com.github.vladimirpokhodnya.tasktracker.service.TaskService;
